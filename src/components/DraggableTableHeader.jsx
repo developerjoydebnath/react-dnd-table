@@ -80,17 +80,18 @@ export const DraggableTableHeader = ({
 
 
     // eslint-disable-next-line react/prop-types
-    return <th style={{background: isDragging ? '#ddd' : ''}} ref={ref}>
+    return <th className="px-2" style={{background: isDragging ? '#ddd' : ''}} ref={ref}>
         <div>
             <div>{column?.heading}</div>
-            <div>
+            <div className="my-1.5">
                 <input 
                     type={inputType(column?.id)}
                     name="" 
                     id={column?.id}
-                    className="input-field"
                     value={filterValue[column?.id]}
                     onChange={(e) => filter(e)}
+                    placeholder="Search..."
+                    className="w-32 ps-2 text-sm font-normal outline-none rounded py-0.5 text-gray-500"
                 />
             </div>
         </div>

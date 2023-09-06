@@ -3,6 +3,7 @@
 import React from "react";
 import { DraggableRow } from "../DraggableRow";
 import { DraggableTableHeader } from "../DraggableTableHeader";
+import Pagination from "../Pagination";
 
 
 export const Table = ({
@@ -14,10 +15,8 @@ export const Table = ({
     // gey the column ordering
     const [columnOrder, setColumnOrder] = React.useState(columns.map(column => column.id))
 
-
     // get the row ordering
     const [rowOrder, setRowOrder] = React.useState(data.map(row => row.id))
-
 
     // filter state
     const [filterValue, setFilterValue] = React.useState({
@@ -27,6 +26,15 @@ export const Table = ({
         account_number: '',
         account_name: '',
     })
+
+    // items per page 
+    const [itemsPerPage, setItemsPerPage] = React.useState(10);
+    
+    // page number
+    const [pageNumber, setPageNumber] = React.useState(1)
+
+    // total page
+    const [totalPages, setTotalPages] = React.useState(Math.ceil(data.length / itemsPerPage))
     
 
     // get the column data by heading ids
@@ -59,7 +67,7 @@ export const Table = ({
         }
     }
 
-    // filter
+    // search filter with pagination
     const filteredData = tableRows.filter(row => {
         return (
             row.id.toLowerCase().includes(filterValue.id) &&
@@ -69,17 +77,15 @@ export const Table = ({
             row.amount.includes(filterValue.amount)
         )
 
-    })
+    }).slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage)
     
-    console.log(filteredData);
-
 
     return (
-        <div>
-            <table>
+        <div className="mx-20 mt-10 rounded-md">
+            <table className="w-full">
 
-                <thead>
-                    <tr>
+                <thead className="">
+                    <tr className="bg-gray-300">
                         {tableColumns.map(column => 
 
                             <DraggableTableHeader
@@ -97,7 +103,8 @@ export const Table = ({
                 </thead>
                 
                 <tbody>
-                    {filteredData.map((row, index) => (
+                    {filteredData
+                    .map((row, index) => (
                   
                         <DraggableRow 
                             key={index}
@@ -111,6 +118,17 @@ export const Table = ({
                 </tbody>
                 
             </table>
+            <div className="my-10">
+                <Pagination
+                    setTotalPages={setTotalPages}
+                    totalPages={totalPages}
+                    data={data}
+                    itemsPerPage={itemsPerPage}
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                    setItemsPerPage={setItemsPerPage}
+                />
+            </div>
         </div>
     )
 }

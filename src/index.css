@@ -1,23 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 
-table, th, td {
-    border: 1px solid #aaa;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 2px 12px;
-}
-
-th {
-    cursor: pointer;
-}
-
-.input-field{
-    width: 100px;
-    outline: none;
-    border: 1px solid #bbb;
-    padding-left: 4px;
-    margin: 4px 0;
-    border-radius: 3px;
-}
+@layer utilities {
+    th{
+        @apply text-center pt-1;
+    }
+    td {
+      @apply p-2 text-start;
+    }
+  }

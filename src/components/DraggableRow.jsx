@@ -61,11 +61,11 @@ export const DraggableRow = ({
     }, [preview])
 
 
-    return <tr ref={ref} style={{background: isDragging ? '#ddd': ''}}>
-    {tableColumns?.map(col => (
-        <React.Fragment key={col.id}>
-            {col.cell({row})}
-        </React.Fragment>
-    ) )}
-</tr>
+    return <tr className="hover:bg-gray-200" ref={ref} style={{background: isDragging ? '#ddd': ''}}>
+        {tableColumns?.map(col => (
+            <React.Fragment key={col.id}>
+                {col.cell({row})}
+            </React.Fragment>
+        ) )}
+    </tr>
 }

@@ -59,7 +59,7 @@ const DragPreview = () => {
             color: 'black',
           }}
         >
-          {item.row.id} | {item.row.account_name}
+          {item.row.id} | {item.row.account_name} | {item.row.card_number} | {item.row.amount} | {item.row.account_number}
         </div>
       )}
     </div>

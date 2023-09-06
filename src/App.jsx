@@ -9,11 +9,16 @@ function App() {
   const [data, setData] = React.useState(fakeData({numberOfRows: 50}))
 
   return (
-    <Table 
-      data={data}
-      columns={[...Columns]}
-      loading={false}
-    />
+    <div>
+      <div>
+        <h1>hello</h1>
+      </div>
+      <Table 
+        data={data}
+        columns={[...Columns]}
+        loading={false}
+      />
+    </div>
   )
 }
 
