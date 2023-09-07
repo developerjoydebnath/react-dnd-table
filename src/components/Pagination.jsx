@@ -6,25 +6,30 @@ import React from 'react';
 const Pagination = ({
     setTotalPages,
     totalPages,
-    data,
     itemsPerPage,
     pageNumber,
     setPageNumber,
-    setItemsPerPage
+    setItemsPerPage,
+    totalData
 }) => {
+
 
         // total page 
         React.useEffect(() => {
             // set the total page value to the state
-            const total = Math.ceil(data?.length / itemsPerPage)
+            const total = Math.ceil(totalData / itemsPerPage)
             setTotalPages(total)
             
             // adjust last page if the jump to last page
             if(totalPages < pageNumber) {
                 setPageNumber(totalPages)
             }
+
+            if(pageNumber === 0 && totalPages !== 0) {
+                setPageNumber(1)
+            }
             
-        }, [pageNumber, itemsPerPage, data, totalPages])
+        }, [pageNumber, itemsPerPage, totalData, totalPages])
     
     
     

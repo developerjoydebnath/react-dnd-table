@@ -77,6 +77,7 @@ export const DraggableTableHeader = ({
                 return;
         }
     }
+    
 
 
     // eslint-disable-next-line react/prop-types
@@ -84,15 +85,38 @@ export const DraggableTableHeader = ({
         <div>
             <div>{column?.heading}</div>
             <div className="my-1.5">
-                <input 
-                    type={inputType(column?.id)}
-                    name="" 
-                    id={column?.id}
-                    value={filterValue[column?.id]}
-                    onChange={(e) => filter(e)}
-                    placeholder="Search..."
-                    className="w-32 ps-2 text-sm font-normal outline-none rounded py-0.5 text-gray-500"
-                />
+                {column?.id === 'amount' ? 
+                    <span className="flex items-center gap-2 justify-center">
+                        <input 
+                            type='number'
+                            min={0}
+                            id={`${column?.id}_min`}
+                            value={filterValue[column?.id]}
+                            onChange={(e) => filter(e)}
+                            placeholder="Min"
+                            className="w-16 ps-2 text-sm font-normal outline-none rounded py-0.5 text-gray-500"
+                        />
+                        <input 
+                            type='number'
+                            min={0}
+                            id={`${column?.id}_max`}
+                            value={filterValue[column?.id]}
+                            onChange={(e) => filter(e)}
+                            placeholder="Max"
+                            className="w-16 ps-2 text-sm font-normal outline-none rounded py-0.5 text-gray-500"
+                        />
+                    </span>
+                    :
+                    <input 
+                        type={inputType(column?.id)}
+                        name="" 
+                        id={column?.id}
+                        value={filterValue[column?.id]}
+                        onChange={(e) => filter(e)}
+                        placeholder="Search..."
+                        className="w-32 ps-2 text-sm font-normal outline-none rounded py-0.5 text-gray-500"
+                    />
+                }
             </div>
         </div>
     </th>
