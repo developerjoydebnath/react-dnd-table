@@ -22,7 +22,7 @@ export const Table = ({
     const [filterValue, setFilterValue] = React.useState({
         id : '',
         amount_min: '',
-        amount_max: 600,
+        amount_max: 0,
         card_number: '',
         account_number: '',
         account_name: '',
@@ -101,16 +101,19 @@ export const Table = ({
     useEffect(() => {
         // maximum amount of table
         const maxAmount = Math.max(...data.map(d => (parseInt(d.amount)))) + 1;
-        setFilterValue({...filterValue, amount_max: maxAmount})
-    }, [])
-    
+        console.log(maxAmount);
+        if(filterValue.amount_max == 0){
+            setFilterValue({...filterValue, amount_max: maxAmount})
+        }
+        console.log(filterValue.amount_max);
+    }, [filterValue.amount_max])
 
     return (
         <div className="mx-20 mt-10 rounded-md">
             <table className="w-full">
 
                 <thead className="">
-                    <tr className="bg-gray-300">
+                    <tr className="bg-gray-200">
                         {tableColumns.map(column => 
 
                             <DraggableTableHeader
