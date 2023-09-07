@@ -101,11 +101,11 @@ export const Table = ({
     useEffect(() => {
         // maximum amount of table
         const maxAmount = Math.max(...data.map(d => (parseInt(d.amount)))) + 1;
-        console.log(maxAmount);
+
         if(filterValue.amount_max == 0){
             setFilterValue({...filterValue, amount_max: maxAmount})
         }
-        console.log(filterValue.amount_max);
+        
     }, [filterValue.amount_max])
 
     return (
@@ -113,7 +113,7 @@ export const Table = ({
             <table className="w-full">
 
                 <thead className="">
-                    <tr className="bg-gray-200">
+                    <tr className="bg-slate-200">
                         {tableColumns.map(column => 
 
                             <DraggableTableHeader
