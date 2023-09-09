@@ -10,9 +10,6 @@ function App() {
 
   return (
     <div>
-      <div>
-        <h1>hello</h1>
-      </div>
       <Table 
         data={data}
         columns={[...Columns]}

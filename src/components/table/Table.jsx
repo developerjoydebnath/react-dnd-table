@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import React from "react";
 import { DraggableRow } from "../DraggableRow";
 import { DraggableTableHeader } from "../DraggableTableHeader";
 import Pagination from "../Pagination";
+import { ResetAndFilter } from "../ResetAndFilter";
 
 
 export const Table = ({
@@ -26,6 +27,15 @@ export const Table = ({
         card_number: '',
         account_number: '',
         account_name: '',
+    });
+
+    // select status
+    const [selecteds, setSelecteds] = React.useState({
+        id : true,
+        amount: true,
+        card: true,
+        account_number: true,
+        account_name: true,
     })
 
 
@@ -41,6 +51,8 @@ export const Table = ({
     // total page
     const [totalPages, setTotalPages] = React.useState(Math.ceil(totalData / itemsPerPage));
     
+    // all checked 
+    const [allSelected, setAllSelected] = React.useState(true)
 
     // get the column data by heading ids
     const tableColumns = columnOrder.map(col => {
@@ -75,7 +87,7 @@ export const Table = ({
     }
     
 
-    // search filter with pagination
+    // search filter
     const searchFilteredData = tableRows.filter(row => {
         
         return (
@@ -89,16 +101,28 @@ export const Table = ({
 
     })
 
-
+    // pagination 
     const paginationData = searchFilteredData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage)
 
 
-    useEffect(() => {
-        setTotalData(searchFilteredData?.length)
-    }, [searchFilteredData])
+    // set total data after filtering
+    React.useEffect(() => {
+        if(
+            selecteds.id === false &&
+            selecteds.account_name === false &&
+            selecteds.account_number === false &&
+            selecteds.card === false &&
+            selecteds.amount === false
+        ) {
+            setTotalPages(0);
+        } else {
+            setTotalPages(Math.ceil(totalData / itemsPerPage));
+            setTotalData(searchFilteredData?.length);
+        }
+    }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);
 
 
-    useEffect(() => {
+    React.useEffect(() => {
         // maximum amount of table
         const maxAmount = Math.max(...data.map(d => (parseInt(d.amount)))) + 1;
 
@@ -106,10 +130,21 @@ export const Table = ({
             setFilterValue({...filterValue, amount_max: maxAmount})
         }
         
-    }, [filterValue.amount_max])
+    }, [filterValue.amount_max]);
+
+ 
 
     return (
         <div className="mx-20 mt-10 rounded-md">
+            <ResetAndFilter
+                setAllSelected={setAllSelected}
+                columns={columns}
+                allSelected={allSelected}
+                selecteds={selecteds}
+                setSelecteds={setSelecteds}
+                columnOrder={columnOrder}
+                setColumnOrder={setColumnOrder}
+            />
             <table className="w-full">
 
                 <thead className="">

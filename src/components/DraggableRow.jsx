@@ -45,11 +45,8 @@ export const DraggableRow = ({
     const [{ canDrop, isOver }, drop] = useDrop({
         accept: 'ROW',
         drop: (dragRow) => {
-            
             const reOrdered = reOrderedTableRow(dragRow.row.id, row.id, rowOrder)
-
             setRowOrder(reOrdered)
-
         },
         collect: (monitor) => ({
             isOver: monitor.isOver(),
@@ -67,7 +64,7 @@ export const DraggableRow = ({
     }, [preview])
 
 
-    return <tr className={`${isActive ? 'bg-slate-200' : 'hover:bg-gray-200'}`} ref={ref} style={{background: isDragging ? '#efefef': '', opacity: isDragging ? '0.3' : ''}}>
+    return <tr className={`${isActive ? 'bg-[#e6e6e6]' : 'hover:bg-[#e6e6e6]'}`} ref={ref} style={{ opacity: isDragging ? '0.5' : ''}}>
         {tableColumns?.map(col => (
             <React.Fragment key={col.id}>
                 {col.cell({row})}
