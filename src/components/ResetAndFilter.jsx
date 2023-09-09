@@ -5,13 +5,40 @@ import React from "react";
 
 export const ResetAndFilter = ({
     columns,
-    allSelected,
-    selecteds,
-    setSelecteds,
     columnOrder,
     setColumnOrder,
-    setAllSelected
+    setTotalPages,
+    setTotalData,
+    totalData,
+    itemsPerPage,
+    searchFilteredData
 }) => {
+    // select status
+    const [selecteds, setSelecteds] = React.useState({
+        id : true,
+        amount: true,
+        card: true,
+        account_number: true,
+        account_name: true,
+    })
+    // all checked 
+    const [allSelected, setAllSelected] = React.useState(true)
+
+    // set total data after filtering
+    React.useEffect(() => {
+        if(
+            selecteds.id === false &&
+            selecteds.account_name === false &&
+            selecteds.account_number === false &&
+            selecteds.card === false &&
+            selecteds.amount === false
+        ) {
+            setTotalPages(0);
+        } else {
+            setTotalPages(Math.ceil(totalData / itemsPerPage));
+            setTotalData(searchFilteredData?.length);
+        }
+    }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);    
 
     // unselect select all if at least one selected is false
     React.useEffect(() => {
@@ -138,34 +165,49 @@ export const ResetAndFilter = ({
 
 
     return (
-        <div>
-            <button  onClick={resetColumnOrder} className="border px-5 py-2 mb-2 rounded bg-gray-300">reset</button>
-            <div className="border bg-white">
-                <div>
-                    <input 
-                        checked={allSelected}
-                        onChange={selectAllStatus} type="checkbox" 
-                        name='all' 
-                        id='all'
-                        className="me-1"
-                    />
-                    <label htmlFor='all'>Select All</label>
-                </div>
-                {
-                    columns.map(col => 
-                        <div key={col.id}>
+        <div className="flex justify-end items-center gap-5 mb-3">
+            <button 
+                onClick={resetColumnOrder} 
+                className="border px-5 py-2 rounded bg-slate-200 hover:bg-slate-300 hover:text-gray-600 font-semibold text text-gray-500"
+            >
+                Reset All
+            </button>
+
+            <div className="relative group">
+
+                <span className="border px-5 py-2.5 rounded bg-slate-200 cursor-pointer font-semibold text text-gray-500 hover:bg-slate-300">Filters</span>
+
+                <div className="absolute top-full right-0 pt-3 w-40 group-hover:block hidden">
+                    <div className="border bg-white px-2 py-2 rounded-md w-full shadow-md">
+                        <div className="my-1">
                             <input 
-                                type="checkbox" 
-                                onChange={(e) => singleChecking(e)} 
-                                checked={selecteds[col.id]} 
-                                name={col.id} 
-                                id={col.id} 
-                                className="me-1"
+                                checked={allSelected}
+                                onChange={selectAllStatus} type="checkbox" 
+                                name='all' 
+                                id='all'
+                                className="me-1 cursor-pointer"
                             />
-                            <label htmlFor={col.id}>{col.heading}</label>
+                            <label htmlFor='all' className="cursor-pointer">Select All</label>
                         </div>
-                    ) 
-                }
+                        {
+                            columns.map(col => 
+                                <div key={col.id} className="my-1">
+                                    <input 
+                                        type="checkbox" 
+                                        onChange={(e) => singleChecking(e)} 
+                                        checked={selecteds[col.id]} 
+                                        name={col.id} 
+                                        id={col.id} 
+                                        className="me-1 cursor-pointer"
+                                    />
+                                    <label htmlFor={col.id} className="cursor-pointer">
+                                        {col.heading}
+                                    </label>
+                                </div>
+                            ) 
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     )

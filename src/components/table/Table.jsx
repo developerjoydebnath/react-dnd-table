@@ -29,15 +29,6 @@ export const Table = ({
         account_name: '',
     });
 
-    // select status
-    const [selecteds, setSelecteds] = React.useState({
-        id : true,
-        amount: true,
-        card: true,
-        account_number: true,
-        account_name: true,
-    })
-
 
     // items per page 
     const [itemsPerPage, setItemsPerPage] = React.useState(10);
@@ -50,10 +41,8 @@ export const Table = ({
 
     // total page
     const [totalPages, setTotalPages] = React.useState(Math.ceil(totalData / itemsPerPage));
-    
-    // all checked 
-    const [allSelected, setAllSelected] = React.useState(true)
 
+    
     // get the column data by heading ids
     const tableColumns = columnOrder.map(col => {
         return columns.find(column => col === column.id);
@@ -102,24 +91,7 @@ export const Table = ({
     })
 
     // pagination 
-    const paginationData = searchFilteredData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage)
-
-
-    // set total data after filtering
-    React.useEffect(() => {
-        if(
-            selecteds.id === false &&
-            selecteds.account_name === false &&
-            selecteds.account_number === false &&
-            selecteds.card === false &&
-            selecteds.amount === false
-        ) {
-            setTotalPages(0);
-        } else {
-            setTotalPages(Math.ceil(totalData / itemsPerPage));
-            setTotalData(searchFilteredData?.length);
-        }
-    }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);
+    const paginationData = searchFilteredData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage);
 
 
     React.useEffect(() => {
@@ -130,6 +102,7 @@ export const Table = ({
             setFilterValue({...filterValue, amount_max: maxAmount})
         }
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterValue.amount_max]);
 
  
@@ -137,13 +110,14 @@ export const Table = ({
     return (
         <div className="mx-20 mt-10 rounded-md">
             <ResetAndFilter
-                setAllSelected={setAllSelected}
                 columns={columns}
-                allSelected={allSelected}
-                selecteds={selecteds}
-                setSelecteds={setSelecteds}
+                setTotalPages={setTotalPages}
                 columnOrder={columnOrder}
                 setColumnOrder={setColumnOrder}
+                setTotalData={setTotalData}
+                totalData={totalData}
+                itemsPerPage={itemsPerPage}
+                searchFilteredData={searchFilteredData}
             />
             <table className="w-full">
 
