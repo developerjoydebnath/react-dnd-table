@@ -45,6 +45,7 @@ export const DraggableTableHeader = ({
             isDragging: monitor.isDragging()
         })
     })
+    
 
     const [{canDrop, isOver}, drop] = useDrop({
         accept: 'COLUMN',
