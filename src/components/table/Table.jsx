@@ -42,6 +42,17 @@ export const Table = ({
     // total page
     const [totalPages, setTotalPages] = React.useState(Math.ceil(totalData / itemsPerPage));
 
+    // select status
+    const [selecteds, setSelecteds] = React.useState({
+        id : true,
+        amount: true,
+        card: true,
+        account_number: true,
+        account_name: true,
+    })
+    // all checked 
+    const [allSelected, setAllSelected] = React.useState(true)    
+
     
     // get the column data by heading ids
     const tableColumns = columnOrder.map(col => {
@@ -105,19 +116,35 @@ export const Table = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [filterValue.amount_max]);
 
+
+    // set total data after filtering
+    React.useEffect(() => {
+        if(
+            selecteds.id === false &&
+            selecteds.account_name === false &&
+            selecteds.account_number === false &&
+            selecteds.card === false &&
+            selecteds.amount === false
+        ) {
+            setTotalPages(0);
+        } else {
+            setTotalPages(Math.ceil(totalData / itemsPerPage));
+            setTotalData(searchFilteredData?.length);
+        }
+    }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);
+
  
 
     return (
         <div className="mx-20 mt-10 rounded-md">
             <ResetAndFilter
                 columns={columns}
-                setTotalPages={setTotalPages}
                 columnOrder={columnOrder}
                 setColumnOrder={setColumnOrder}
-                setTotalData={setTotalData}
-                totalData={totalData}
-                itemsPerPage={itemsPerPage}
-                searchFilteredData={searchFilteredData}
+                selecteds={selecteds}
+                setAllSelected={setAllSelected}
+                allSelected={allSelected}
+                setSelecteds={setSelecteds}
             />
             <table className="w-full">
 

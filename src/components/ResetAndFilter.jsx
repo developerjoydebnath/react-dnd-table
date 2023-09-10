@@ -7,38 +7,12 @@ export const ResetAndFilter = ({
     columns,
     columnOrder,
     setColumnOrder,
-    setTotalPages,
-    setTotalData,
-    totalData,
-    itemsPerPage,
-    searchFilteredData
+    selecteds,
+    setAllSelected,
+    allSelected,
+    setSelecteds
 }) => {
-    // select status
-    const [selecteds, setSelecteds] = React.useState({
-        id : true,
-        amount: true,
-        card: true,
-        account_number: true,
-        account_name: true,
-    })
-    // all checked 
-    const [allSelected, setAllSelected] = React.useState(true)
-
-    // set total data after filtering
-    React.useEffect(() => {
-        if(
-            selecteds.id === false &&
-            selecteds.account_name === false &&
-            selecteds.account_number === false &&
-            selecteds.card === false &&
-            selecteds.amount === false
-        ) {
-            setTotalPages(0);
-        } else {
-            setTotalPages(Math.ceil(totalData / itemsPerPage));
-            setTotalData(searchFilteredData?.length);
-        }
-    }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);    
+    
 
     // unselect select all if at least one selected is false
     React.useEffect(() => {
