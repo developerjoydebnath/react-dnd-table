@@ -10,7 +10,10 @@ export const ResetAndFilter = ({
     selecteds,
     setAllSelected,
     allSelected,
-    setSelecteds
+    setSelecteds,
+    searchText,
+    handleGlobalSearch,
+    setSearchText
 }) => {
     
 
@@ -76,25 +79,26 @@ export const ResetAndFilter = ({
     }, [allSelected, setSelecteds]);
 
 
-        // reset column headings
-        const resetColumnOrder = () => {
-            setAllSelected(true)
-            setColumnOrder(columns.map(column => column.id))
+    // reset column headings
+    const resetColumnOrder = () => {
+        setSearchText('');
+        setAllSelected(true);
+        setColumnOrder(columns.map(column => column.id));
+    }
+
+    // handle select all status 
+    const selectAllStatus = () => {
+        setAllSelected(!allSelected)
+        if(allSelected){
+            setSelecteds({
+                id : false,
+                amount: false,
+                card: false,
+                account_number: false,
+                account_name: false,
+            });
         }
-    
-        // handle select all status 
-        const selectAllStatus = () => {
-            setAllSelected(!allSelected)
-            if(allSelected){
-                setSelecteds({
-                    id : false,
-                    amount: false,
-                    card: false,
-                    account_number: false,
-                    account_name: false,
-                });
-            }
-        }
+    }   
 
 
     // handling column hiding and showing
@@ -139,17 +143,22 @@ export const ResetAndFilter = ({
 
 
     return (
-        <div className="flex justify-end items-center gap-5 mb-3">
+        <div className="flex justify-end items-center gap-2 mb-3">
+            <input 
+                type="text" className="border py-[6px] outline-none rounded-md px-3 text-slate-500 shadow" placeholder="Search..." 
+                onChange={(e) => handleGlobalSearch(e)}
+                value={searchText}
+            />
             <button 
                 onClick={resetColumnOrder} 
-                className="border px-5 py-2 rounded bg-slate-200 hover:bg-slate-300 hover:text-gray-600 font-semibold text text-gray-500"
+                className="border px-5 py-[6px] rounded bg-slate-200 hover:bg-slate-300 hover:text-gray-600 font-semibold text text-gray-500"
             >
-                Reset All
+                Reset
             </button>
 
             <div className="relative group">
 
-                <span className="border px-5 py-2.5 rounded bg-slate-200 cursor-pointer font-semibold text text-gray-500 hover:bg-slate-300">Filters</span>
+                <span className="border px-5 py-[7px] rounded bg-slate-200 cursor-pointer font-semibold text text-gray-500 hover:bg-slate-300">Filters</span>
 
                 <div className="absolute top-full right-0 pt-3 w-40 group-hover:block hidden">
                     <div className="border bg-white px-2 py-2 rounded-md w-full shadow-md">

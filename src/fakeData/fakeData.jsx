@@ -12,7 +12,7 @@ export const fakeData = ({numberOfRows}) => {
             account_number: faker.finance.accountNumber(16),
             amount: faker.finance.amount(),
             cvv: faker.finance.creditCardCVV(),
-            card_number: faker.finance.creditCardNumber(),
+            card: faker.finance.creditCardNumber(),
         }
         data.push(row);
     }

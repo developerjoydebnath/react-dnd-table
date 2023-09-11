@@ -10,7 +10,8 @@ export const DraggableRow = ({
     row,
     tableColumns,
     rowOrder,
-    setRowOrder
+    setRowOrder,
+    searchText
 }) => {
 
     const ref = React.useRef(null)
@@ -67,7 +68,7 @@ export const DraggableRow = ({
     return <tr className={`${isActive ? 'bg-[#e6e6e6]' : 'hover:bg-[#e6e6e6]'}`} ref={ref} style={{ opacity: isDragging ? '0.5' : ''}}>
         {tableColumns?.map(col => (
             <React.Fragment key={col.id}>
-                {col.cell({row})}
+                {col.cell({row}, searchText)}
             </React.Fragment>
         ) )}
     </tr>

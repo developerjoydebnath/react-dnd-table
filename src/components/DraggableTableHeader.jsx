@@ -29,7 +29,7 @@ export const DraggableTableHeader = ({
 
         return newColumnOrder;
         
-    }
+    };
 
 
     const [ {isDragging} , drag, preview] = useDrag({
@@ -89,7 +89,9 @@ export const DraggableTableHeader = ({
     // eslint-disable-next-line react/prop-types
     return <th className={`px-2 transition-all ${isDragging ? 'opacity-30': ''} ${isActive ? 'scale-105' : ''}`} ref={ref}>
         <div>
-            <div>{column?.heading}</div>
+            <div>
+                {column?.heading} 
+            </div>
             <div className="my-1.5">
                 {column?.id === 'amount' ? 
                     <span className="flex items-center gap-2 justify-center">

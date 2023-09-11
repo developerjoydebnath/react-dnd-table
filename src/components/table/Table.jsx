@@ -24,7 +24,7 @@ export const Table = ({
         id : '',
         amount_min: '',
         amount_max: 0,
-        card_number: '',
+        card: '',
         account_number: '',
         account_name: '',
     });
@@ -50,8 +50,12 @@ export const Table = ({
         account_number: true,
         account_name: true,
     })
+
     // all checked 
-    const [allSelected, setAllSelected] = React.useState(true)    
+    const [allSelected, setAllSelected] = React.useState(true);
+
+    // search text 
+    const [searchText, setSearchText] = React.useState('')
 
     
     // get the column data by heading ids
@@ -74,7 +78,7 @@ export const Table = ({
             case 'account_name':
                 return setFilterValue({...filterValue, account_name : e?.target?.value.toLowerCase()})
             case 'card':
-                return setFilterValue({...filterValue, card_number : Number(e?.target?.value)})
+                return setFilterValue({...filterValue, card : Number(e?.target?.value)})
             case 'amount_min':
                 return setFilterValue({...filterValue, amount_min : Number(e?.target?.value)})
             case 'amount_max':
@@ -87,20 +91,25 @@ export const Table = ({
     }
     
 
-    // search filter
+    // search filter and global search filter
     const searchFilteredData = tableRows.filter(row => {
         
         return (
             row.id.toLowerCase().includes(filterValue.id) &&
             row.account_name.toLowerCase().includes(filterValue.account_name) &&
             row.account_number.includes(filterValue.account_number) &&
-            row.card_number.includes(filterValue.card_number) &&
+            row.card.includes(filterValue.card) &&
             row.amount > filterValue.amount_min &&
             row.amount < filterValue.amount_max
         )
+        
+    }).filter(data => 
+            Object.values(data).some((value) =>
+            String(value).toLowerCase().includes(searchText)
+        )
+    )
 
-    })
-
+    
     // pagination 
     const paginationData = searchFilteredData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage);
 
@@ -132,8 +141,12 @@ export const Table = ({
             setTotalData(searchFilteredData?.length);
         }
     }, [searchFilteredData, selecteds, itemsPerPage,  totalData]);
-
  
+
+    const handleGlobalSearch = (e) => {
+        const text = e.target.value.toLowerCase();
+        setSearchText(text);
+    }
 
     return (
         <div className="mx-20 mt-10 rounded-md">
@@ -145,6 +158,9 @@ export const Table = ({
                 setAllSelected={setAllSelected}
                 allSelected={allSelected}
                 setSelecteds={setSelecteds}
+                searchText={searchText}
+                handleGlobalSearch={handleGlobalSearch}
+                setSearchText={setSearchText}
             />
             <table className="w-full">
 
@@ -176,6 +192,7 @@ export const Table = ({
                             tableColumns={tableColumns}
                             rowOrder={rowOrder}
                             setRowOrder={setRowOrder}
+                            searchText={searchText}
                         />
                         
                     ))}

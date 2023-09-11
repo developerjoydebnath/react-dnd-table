@@ -42,6 +42,7 @@ const DragPreview = () => {
             padding: '0.5rem 1rem',
             borderRadius: '0.5rem',
             color: 'black',
+            boxShadow: '1px 1px 5px 2px #ddd'
           }}
         >
           {item.column.heading}
@@ -59,7 +60,7 @@ const DragPreview = () => {
             color: 'black',
           }}
         >
-          {item.row.id} | {item.row.account_name} | {item.row.card_number} | {item.row.amount} | {item.row.account_number}
+          {item.row.id} | {item.row.account_name} | {item.row.card} | {item.row.amount} | {item.row.account_number}
         </div>
       )}
     </div>
