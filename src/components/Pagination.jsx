@@ -2,6 +2,7 @@
 
 
 import React from 'react';
+import { Icon } from '../assets/Icons/Icon';
 
 const Pagination = ({
     setTotalPages,
@@ -13,49 +14,65 @@ const Pagination = ({
     totalData
 }) => {
 
+    const [goToPage, setGoToPage] = React.useState('');
 
-        // total page 
-        React.useEffect(() => {
-            // set the total page value to the state
-            const total = Math.ceil(totalData / itemsPerPage)
-            setTotalPages(total)
-            
-            // adjust last page if the jump to last page
-            if(totalPages < pageNumber) {
-                setPageNumber(totalPages)
-            }
-
-            if(pageNumber === 0 && totalPages !== 0) {
-                setPageNumber(1)
-            }
-            
-        }, [pageNumber, itemsPerPage, totalData, totalPages])
-    
-    
-    
-        // previous page number 
-        const prevIousPage = () => {
-            if(pageNumber > 1) {
-                setPageNumber((prev) => prev - 1)
-            }
-        }
+    // total page 
+    React.useEffect(() => {
+        // set the total page value to the state
+        const total = Math.ceil(totalData / itemsPerPage)
+        setTotalPages(total)
         
-        // next page number 
-        const nextPage = () => {
-            if(pageNumber < totalPages) {
-                setPageNumber(prev => prev + 1)
-            }
-        }
-    
-        // go to the last page
-        const goToLastPage = () => {
+        // adjust last page if the jump to last page
+        if(totalPages < pageNumber) {
             setPageNumber(totalPages)
         }
-    
-        // go to the first page
-        const goToFirstPage = () => {
+        if(pageNumber === 0 && totalPages !== 0) {
             setPageNumber(1)
         }
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pageNumber, itemsPerPage, totalData, totalPages])
+
+
+
+    // previous page number 
+    const prevIousPage = () => {
+        if(pageNumber > 1) {
+            setPageNumber((prev) => prev - 1)
+        }
+    }
+    
+    // next page number 
+    const nextPage = () => {
+        if(pageNumber < totalPages) {
+            setPageNumber(prev => prev + 1)
+        }
+    }
+
+    // go to the last page
+    const goToLastPage = () => {
+        setPageNumber(totalPages)
+    }
+
+    // go to the first page
+    const goToFirstPage = () => {
+        setPageNumber(1)
+    }
+
+    // jump to any page 
+    const jumpToPage = (e) => {
+        if(e.target.value){
+            if( e.target.value <= totalPages ){
+                setGoToPage(Number(e.target.value));
+                setPageNumber(e.target.value);
+            } else {
+                alert('Page number is getter than total pages');
+                setGoToPage('');
+            }
+        } else {
+            setGoToPage('');
+        }
+    };
 
 
     return (
@@ -65,33 +82,43 @@ const Pagination = ({
                         <button
                             disabled={pageNumber < 2}
                             onClick={goToFirstPage} 
-                            className="border px-2 py-1 rounded cursor-pointer shadow me-2 disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                            className="border px-2 py-1 rounded cursor-pointer shadow me-2 disabled:bg-zinc-300 disabled:cursor-not-allowed"
                         >
-                            {'<<'}
+                            <Icon iconName='double-arrow-left' className='h-5 w-5' />
                         </button>
                         <button
                             disabled={pageNumber < 2}
                             onClick={prevIousPage} 
-                            className="border px-3 py-1 rounded cursor-pointer shadow me-2 disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                            className="border px-2 py-1 rounded cursor-pointer shadow me-2 disabled:bg-zinc-300 disabled:cursor-not-allowed"
                         >
-                            {'<'}
+                            <Icon iconName='arrow-left' className='h-5 w-5' />
                         </button>
                         <button
                             disabled={pageNumber > totalPages - 1}
                             onClick={nextPage} 
-                            className="border px-3 py-1 rounded cursor-pointer me-2 shadow disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                            className="border px-2 py-1 rounded cursor-pointer me-2 shadow disabled:bg-zinc-300 disabled:cursor-not-allowed"
                         >
-                            {'>'}
+                            <Icon iconName='arrow-right' className='h-5 w-5' />
                         </button>
                         <button
                             disabled={pageNumber > totalPages - 1}
                             onClick={goToLastPage} 
-                            className="border px-2 py-1 rounded cursor-pointer shadow disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                            className="border px-2 py-1 rounded cursor-pointer shadow disabled:bg-zinc-300 disabled:cursor-not-allowed"
                         >
-                            {'>>'}
+                            <Icon iconName='double-arrow-right' className='h-5 w-5' />
                         </button>
                     </div>
 
+                    <div className='flex justify-center items-center gap-2'>
+                        <h4 className='text-slate-500'>Go to page</h4>
+                        <input 
+                            type="number"
+                            className='border py-0.5 w-10 text-slate-500 outline-none rounded text-center shadow'
+                            value={goToPage}
+                            onChange={(e) => jumpToPage(e)}
+                        />
+                    </div>
+                    
                     <div>
                         <select
                             onChange={(e) => {
@@ -99,11 +126,13 @@ const Pagination = ({
                             }}
                             name="sort"
                             id="sort" 
-                            className="border w-20 rounded py-0.5 outline-none shadow"
+                            className="border w-20 rounded py-0.5 px-1 outline-none shadow"
                         >
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
                             
                         </select>
                     </div>

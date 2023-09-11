@@ -6,7 +6,7 @@ import { Table } from './components/table/Table';
 import { fakeData } from './fakeData/fakeData';
 
 function App() {
-  const [data, setData] = React.useState(fakeData({numberOfRows: 50}))
+  const [data, setData] = React.useState(fakeData({numberOfRows: 500}))
 
   return (
     <div>

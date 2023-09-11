@@ -19,6 +19,9 @@ export const Table = ({
     // get the row ordering
     const [rowOrder, setRowOrder] = React.useState(data.map(row => row.id))
 
+    // search button selection
+    const [searchButtons, setSearchButtons] = React.useState([]);
+
     // filter state
     const [filterValue, setFilterValue] = React.useState({
         id : '',
@@ -146,7 +149,8 @@ export const Table = ({
     const handleGlobalSearch = (e) => {
         const text = e.target.value.toLowerCase();
         setSearchText(text);
-    }
+    };
+
 
     return (
         <div className="mx-20 mt-10 rounded-md">
@@ -176,6 +180,8 @@ export const Table = ({
                                 setColumnOrder={setColumnOrder}
                                 filter={filter}
                                 filterValue={filterValue}
+                                searchButtons={searchButtons}
+                                setSearchButtons={setSearchButtons}
                             />
                             
                         )}

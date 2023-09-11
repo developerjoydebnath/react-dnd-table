@@ -145,7 +145,8 @@ export const ResetAndFilter = ({
     return (
         <div className="flex justify-end items-center gap-2 mb-3">
             <input 
-                type="text" className="border py-[6px] outline-none rounded-md px-3 text-slate-500 shadow" placeholder="Search..." 
+                type="text" className="border py-[6px] outline-none rounded-md px-3 text-slate-500 shadow" 
+                placeholder="Search..." 
                 onChange={(e) => handleGlobalSearch(e)}
                 value={searchText}
             />
