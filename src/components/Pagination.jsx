@@ -127,8 +127,10 @@ const Pagination = ({
                             name="sort"
                             id="sort" 
                             className="border w-20 rounded py-0.5 px-1 outline-none shadow"
+                            value={itemsPerPage}
                         >
                             <option value="10">10</option>
+                            <option value="15" selected>15</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
                             <option value="40">40</option>

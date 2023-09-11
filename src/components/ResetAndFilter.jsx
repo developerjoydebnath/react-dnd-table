@@ -13,7 +13,8 @@ export const ResetAndFilter = ({
     setSelecteds,
     searchText,
     handleGlobalSearch,
-    setSearchText
+    setSearchText,
+    setItemsPerPage
 }) => {
     
 
@@ -81,6 +82,7 @@ export const ResetAndFilter = ({
 
     // reset column headings
     const resetColumnOrder = () => {
+        setItemsPerPage(15)
         setSearchText('');
         setAllSelected(true);
         setColumnOrder(columns.map(column => column.id));

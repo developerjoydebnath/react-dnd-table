@@ -34,7 +34,7 @@ export const Table = ({
 
 
     // items per page 
-    const [itemsPerPage, setItemsPerPage] = React.useState(10);
+    const [itemsPerPage, setItemsPerPage] = React.useState(15);
     
     // page number
     const [pageNumber, setPageNumber] = React.useState(1);
@@ -165,6 +165,7 @@ export const Table = ({
                 searchText={searchText}
                 handleGlobalSearch={handleGlobalSearch}
                 setSearchText={setSearchText}
+                setItemsPerPage={setItemsPerPage}
             />
             <table className="w-full">
 
