@@ -101,7 +101,7 @@ export const DraggableTableHeader = ({
 
 
     // eslint-disable-next-line react/prop-types
-    return <th className={`px-2 transition-all text-left ${isDragging ? 'opacity-30': ''} ${isActive ? 'scale-105' : ''}`} ref={ref}>
+    return <th className={`px-2 transition-all text-left ${isDragging ? 'opacity-30': ''} ${isActive ? 'bg-slate-300' : ''}`} ref={ref}>
         <div>
             <div className="flex justify-start items-center gap-5 py-2">
                 <span className="text-gray-600">{column?.heading}</span>
