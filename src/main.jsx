@@ -37,7 +37,6 @@ const DragPreview = () => {
       {itemType === 'COLUMN' && (
         <div
           style = {{
-            border: '1px solid black',
             backgroundColor: 'white',
             padding: '0.5rem 1rem',
             borderRadius: '0.5rem',
@@ -53,11 +52,11 @@ const DragPreview = () => {
       {itemType === 'ROW' && (
         <div
           style = {{
-            border: '1px solid black',
             backgroundColor: 'white',
             padding: '0.5rem 1rem',
             borderRadius: '0.5rem',
             color: 'black',
+            boxShadow: '1px 1px 5px 2px #ddd'
           }}
         >
           {item.row.id} | {item.row.account_name} | {item.row.card} | {item.row.amount} | {item.row.account_number}

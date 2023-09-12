@@ -64,7 +64,7 @@ const Pagination = ({
         if(e.target.value){
             if( e.target.value <= totalPages ){
                 setGoToPage(Number(e.target.value));
-                setPageNumber(e.target.value);
+                setPageNumber(Number(e.target.value));
             } else {
                 alert('Page number is getter than total pages');
                 setGoToPage('');

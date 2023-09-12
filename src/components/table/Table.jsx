@@ -10,7 +10,7 @@ import { ResetAndFilter } from "../ResetAndFilter";
 export const Table = ({
     data=[],
     columns=[],
-    loading=false,
+    loading,
 }) => {
     
     // gey the column ordering
@@ -152,11 +152,12 @@ export const Table = ({
         const text = e.target.value.toLowerCase();
         setSearchText(text);
     };
-
+    
 
     return (
         <div className="mx-20 mt-10 rounded-md">
             <ResetAndFilter
+                setFilterValue={setFilterValue}
                 columns={columns}
                 columnOrder={columnOrder}
                 setColumnOrder={setColumnOrder}
@@ -168,6 +169,7 @@ export const Table = ({
                 handleGlobalSearch={handleGlobalSearch}
                 setSearchText={setSearchText}
                 setItemsPerPage={setItemsPerPage}
+                setSearchButtons={setSearchButtons}
             />
             <table className="w-full">
 

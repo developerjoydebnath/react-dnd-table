@@ -14,7 +14,9 @@ export const ResetAndFilter = ({
     searchText,
     handleGlobalSearch,
     setSearchText,
-    setItemsPerPage
+    setItemsPerPage,
+    setFilterValue,
+    setSearchButtons
 }) => {
     
 
@@ -105,6 +107,15 @@ export const ResetAndFilter = ({
 
     // reset column headings
     const resetColumnOrder = () => {
+        setFilterValue({
+            id : '',
+            amount_min: '',
+            amount_max: 0,
+            card: '',
+            account_number: '',
+            account_name: '',
+        }),
+        setSearchButtons([])
         setItemsPerPage(15)
         setSearchText('');
         setAllSelected(true);
