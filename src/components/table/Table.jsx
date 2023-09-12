@@ -75,6 +75,7 @@ export const Table = ({
 
     // set filtering text to the local state
     const filter = (e) => {
+
         switch (e?.target?.id) {
             case 'id':
                 return setFilterValue({...filterValue, id : e?.target?.value.toLowerCase()})
@@ -132,11 +133,12 @@ export const Table = ({
     // set total data after filtering
     React.useEffect(() => {
         if(
-            selecteds.id === false &&
-            selecteds.account_name === false &&
-            selecteds.account_number === false &&
-            selecteds.card === false &&
-            selecteds.amount === false
+            [Object.values(selecteds)].filter(s => String(s).includes('true')).length === 0
+            // selecteds.id === false &&
+            // selecteds.account_name === false &&
+            // selecteds.account_number === false &&
+            // selecteds.card === false &&
+            // selecteds.amount === false
         ) {
             setTotalPages(0);
         } else {
